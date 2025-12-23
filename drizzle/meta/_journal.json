@@ -8,6 +8,13 @@
       "when": 1766492935522,
       "tag": "0000_swift_longshot",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1766497018648,
+      "tag": "0001_fat_wallow",
+      "breakpoints": true
     }
   ]
 }
