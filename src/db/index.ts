@@ -7,7 +7,6 @@ const queryClient = postgres(dbConnectionString, {
   max: env.DB_POOL_MAX,
   idle_timeout: 20,
   connect_timeout: 10,
-  prepare: true,
 });
 
 export const db = drizzle(queryClient, {
@@ -18,5 +17,6 @@ export const db = drizzle(queryClient, {
 export type DbClient = typeof db;
 
 export async function closeDb() {
+  console.info("Closing database connections...");
   await queryClient.end();
 }

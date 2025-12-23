@@ -23,6 +23,10 @@ CREATE TABLE user_groups (
   FOREIGN KEY (group_id) REFERENCES groups (id) ON DELETE CASCADE
 );
 
+-- had permissions error needed to quick fix it
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "user";
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO "user";
+
 -- Insert initial data into users table
 INSERT INTO users (name, email) VALUES ('John Doe', 'john@example.com');
 INSERT INTO users (name, email) VALUES ('Jane Smith', 'jane@example.com');
