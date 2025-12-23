@@ -13,7 +13,7 @@ export const paginationQuerySchema = z.object({
     .optional()
     .transform((v) => {
       const num = Number(v);
-      return num > 0 && num <= 100 ? num : 10; // Cap at 100
+      return num > 0 && num <= 100 ? num : 10;
     }),
 });
 

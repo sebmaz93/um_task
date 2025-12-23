@@ -1,13 +1,16 @@
 import { Router } from "express";
+import { db } from "../../db/index.js";
+import { GroupRepository } from "./group.repository.js";
+import { GroupService } from "./group.service.js";
 import { GroupController } from "./group.controller.js";
 
+const groupRepo = new GroupRepository(db);
+const groupService = new GroupService(db, groupRepo);
+const groupController = new GroupController(groupService);
+
 const router: Router = Router();
-const controller = new GroupController();
 
-router.get("/", (req, res, next) => controller.getAllGroups(req, res, next));
-
-router.delete("/:groupId/users/:userId", (req, res, next) =>
-  controller.removeUser(req, res, next),
-);
+router.get("/", groupController.getAllGroups);
+router.delete("/:groupId/users/:userId", groupController.removeUser);
 
 export default router;
