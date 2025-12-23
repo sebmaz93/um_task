@@ -1,22 +1,21 @@
 import { Request, Response, NextFunction } from "express";
 import { UserService } from "./user.service.js";
-import { paginationSchema } from "./user.schema.js";
-
-const userService = new UserService();
+import { paginationQuerySchema } from "../../shared/schemas/pagination.schema.js";
 
 export class UserController {
-  async getAllUsers(req: Request, res: Response, next: NextFunction) {
+  constructor(private readonly userService: UserService = new UserService()) {}
+
+  getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { limit, offset } = paginationSchema.parse(req).query;
-      const data = await userService.getUsers(limit, offset);
+      const { page, limit } = paginationQuerySchema.parse(req.query);
+      const result = await this.userService.getUsers(page, limit);
 
       res.status(200).json({
         status: "success",
-        results: data.length,
-        data,
+        ...result,
       });
     } catch (error) {
       next(error);
     }
-  }
+  };
 }

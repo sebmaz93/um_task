@@ -1,13 +1,22 @@
 import { UserRepository } from "./user.repository.js";
 
 export class UserService {
-  private userRepo: UserRepository;
+  constructor(
+    private readonly userRepo: UserRepository = new UserRepository(),
+  ) {}
 
-  constructor() {
-    this.userRepo = new UserRepository();
-  }
+  async getUsers(page: number, limit: number) {
+    const offset = (page - 1) * limit;
+    const { data, total } = await this.userRepo.getAll(limit, offset);
 
-  async getUsers(limit: number, offset: number) {
-    return await this.userRepo.getAll(limit, offset);
+    return {
+      data,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
   }
 }
