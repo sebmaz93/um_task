@@ -8,7 +8,6 @@ const queryClient = postgres(dbConnectionString, {
   idle_timeout: 20,
   connect_timeout: 10,
   prepare: true,
-  onnotice: () => {},
 });
 
 export const db = drizzle(queryClient, {
